@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setToken } from '../actions/authActions';
 
 interface FormData {
   email: string;
@@ -7,12 +9,14 @@ interface FormData {
 
 const Login: React.FC = () => {
   //hooks
+  const dispatch = useDispatch();
+  
    const [count , setCount]= useState(0)
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-console.log("formData",formData)
+// console.log("formData",formData)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // setFormData({
     //   ...formData,
@@ -21,7 +25,7 @@ console.log("formData",formData)
     // });
     setCount(1)
     // count=1
-console.log("targetname",e.target.name,"targetvalue",e.target.value);
+// console.log("targetname",e.target.name,"targetvalue",e.target.value);
     // formData["email"]="alok@gmail.com"
     setFormData({
       ...formData,
@@ -45,9 +49,25 @@ const handleSubmit = async (e: React.FormEvent) => {
       if (response.ok) {
         // Successful signup
         console.log('User login successfully!');
+       
+        const logindata = await response.json();
+
+        console.log("logindata",logindata);
+
+        // with redux
+        dispatch(setToken(logindata.token));
+
+
+        // without redux
+        // localStorage.setItem("logindata.token")
+
+        
+        // console.log("response",response.json());
+        
       } else {
         // Handle errors, e.g., show an error message to the user
         console.error('Error during signup:', await response.json());
+        window.alert("Login Failed")
       }
     } catch (error) {
       console.error('Error during signup:', error);
