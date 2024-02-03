@@ -14,9 +14,12 @@ const Navbar: React.FC = () => {
         </Link>
         <div className="space-x-4">
           {token ? (
-            <button className="text-white">
-              Logout
-              </button>
+            <>
+              <Link to="/add-blog" className="text-white">
+                Create blog
+              </Link>
+              <button className="text-white">Logout</button>
+            </>
           ) : (
             <>
               <Link to="/login" className="text-white">

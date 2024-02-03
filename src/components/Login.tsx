@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from '../actions/authActions';
+import { useNavigate } from 'react-router-dom';
 
 interface FormData {
   email: string;
@@ -8,6 +9,7 @@ interface FormData {
 }
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   //hooks
   const dispatch = useDispatch();
   
@@ -56,6 +58,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
         // with redux
         dispatch(setToken(logindata.token));
+        navigate("/")
 
 
         // without redux
